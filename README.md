@@ -1,6 +1,6 @@
 # Pakistani WhatsApp Number Tester
 
-A Node.js tool that generates and tests Pakistani phone numbers to check their WhatsApp registration status.
+A tool that generates and tests Pakistani phone numbers to check their WhatsApp registration status. Available in both Node.js and Python versions.
 
 ## Features
 
@@ -8,6 +8,7 @@ A Node.js tool that generates and tests Pakistani phone numbers to check their W
 - Tests numbers against WhatsApp API to check registration status
 - Configurable number of tests and timeout settings
 - Clean console output with status indicators
+- Available in both JavaScript (Node.js) and Python
 
 ## Installation
 
@@ -17,12 +18,23 @@ git clone https://github.com/yourusername/pak-whatsapp-tester.git
 cd pak-whatsapp-tester
 ```
 
-2. Install dependencies:
+### Node.js Version
+
+2. Install Node.js dependencies:
 ```bash
 npm install
 ```
 
+### Python Version
+
+2. Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
+
 ## Usage
+
+### Node.js Version
 
 Run the script:
 ```bash
@@ -34,12 +46,28 @@ Or directly with Node.js:
 node index.js
 ```
 
+### Python Version
+
+Run the Python script:
+```bash
+python tester.py
+```
+
+Or:
+```bash
+python3 tester.py
+```
+
 ## Configuration
 
-You can modify these constants in `index.js`:
-
+### Node.js Version (`index.js`)
 - `NUM_COUNT`: Number of phone numbers to test (default: 15)
 - `HTTP_TIMEOUT`: Timeout for HTTP requests in milliseconds (default: 5000)
+- `NEGATIVE_REGEX`: Regular expression to detect unregistered numbers
+
+### Python Version (`tester.py`)
+- `NUM_COUNT`: Number of phone numbers to test (default: 15)
+- `HTTP_TIMEOUT`: Timeout for HTTP requests in seconds (default: 5)
 - `NEGATIVE_REGEX`: Regular expression to detect unregistered numbers
 
 ## How it works
