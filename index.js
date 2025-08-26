@@ -2,7 +2,7 @@
 const axios = require("axios");
 
 // --- Config ---
-const NUM_COUNT = 15;
+const NUM_COUNT = 50;
 const HTTP_TIMEOUT = 5000;
 const NEGATIVE_REGEX = /Chat on WhatsApp/i; // text indicating invalid/unregistered number
 

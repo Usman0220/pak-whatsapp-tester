@@ -1,0 +1,13 @@
+
+# Dependencies
+/node_modules
+
+# Log files
+wget-log
+
+# Images
+*.jpg
+*.png
+
+# WhatsApp Profiles
+whatsapp_profiles/
