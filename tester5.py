@@ -6,12 +6,15 @@ import aiohttp
 import os
 
 # --- Config ---
-TARGET_REGISTERED = 20
+TARGET_REGISTERED = 50
 HTTP_TIMEOUT = 5
 NEGATIVE_REGEX = re.compile(r"Chat on WhatsApp", re.IGNORECASE)
 PROFILE_PIC_REGEX = re.compile(r'https://pps\.whatsapp\.net/v/t[^\s"\']+', re.IGNORECASE)
 # Regex to match all <h3> tags
 H3_REGEX = re.compile(r'<h3[^>]*>([^<]+)</h3>', re.IGNORECASE | re.DOTALL)
+
+# Directory for saving profile images
+IMAGES_DIR = "profile_images"
 
 MAX_CONCURRENT_REQUESTS = 10
 BATCH_SIZE = 10
@@ -95,6 +98,11 @@ async def download_profile_picture(session, url, filename):
         return False
 
 async def main():
+    # Create images directory if it doesn't exist
+    if not os.path.exists(IMAGES_DIR):
+        os.makedirs(IMAGES_DIR)
+        print(f"Created directory: {IMAGES_DIR}")
+    
     registered = []
     connector = aiohttp.TCPConnector(limit=MAX_CONCURRENT_REQUESTS)
     async with aiohttp.ClientSession(connector=connector, headers=HEADERS) as session:
@@ -117,7 +125,7 @@ async def main():
                     # Download profile picture if available
                     if profile_pic_url:
                         name_part = safe_filename_part(h3_text) if h3_text else "no_name"
-                        filename = f"{n['waInt']}_{name_part}.jpg"
+                        filename = os.path.join(IMAGES_DIR, f"{n['waInt']}_{name_part}.jpg")
 
                         print(f"  Attempting to download profile picture as {filename} ...")
                         success = await download_profile_picture(session, profile_pic_url, filename)
