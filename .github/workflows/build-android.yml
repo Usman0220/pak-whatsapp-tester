@@ -17,12 +17,21 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Build with Buildozer (Docker)
-        working-directory: android_kivy
+      - name: Install system dependencies
         run: |
-          pip install --upgrade pip
-          pip install buildozer
-          buildozer android debug
+          sudo apt-get update
+          sudo apt-get install -y \
+            zip unzip openjdk-17-jdk python3-setuptools \
+            python3-wheel python3-dev git
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install cython buildozer
+
+      - name: Build with Buildozer
+        working-directory: android_kivy
+        run: buildozer android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
