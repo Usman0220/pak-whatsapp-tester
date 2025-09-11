@@ -1,10 +1,12 @@
 Android APK for tester6.py
 
 What this adds
-- android_kivy/: a minimal Kivy app that:
+- android_kivy/: a Kivy app that:
   - Bundles the original tester6.py inside the APK (visible under the “tester6.py” tab)
-  - Provides a simple “Demo” tab that runs safe, local Python logic (no network) to demonstrate functionality
-- buildozer.spec: ready-to-build spec using Kivy/Buildozer
+  - Provides a “Demo” tab with:
+    - Safe, local Python logic (no network) to demonstrate functionality
+    - A “Run full network workflow” button that executes tester6.main() and streams logs into the app
+- buildozer.spec: ready-to-build spec using Kivy/Buildozer with full network dependencies enabled
 - Optional CI (GitHub Actions) provided below to build an APK automatically using Docker
 
 Local build (recommended)
@@ -28,10 +30,14 @@ Install on device:
 - Transfer the generated APK from android_kivy/bin/ to the device and install
 
 Notes
-- The original tester6.py contains heavy network dependencies (aiohttp/asyncio and SSL). To keep the APK build simple and reliable, the app:
-  - Bundles tester6.py as-is so its source is present in the APK
-  - Demonstrates a safe subset of the logic (number generation) via android_kivy/sample_logic.py
-- If you want to run the full network workflow from tester6.py on Android, the build requirements must include aiohttp and its dependencies, and you may need to adjust SSL, permissions, and timeouts. This is not enabled by default here for reliability.
+- Full network workflow enabled:
+  - buildozer.spec includes: python3,kivy,aiohttp,openssl,certifi,yarl,multidict,async-timeout,aiosignal,frozenlist,attrs,setuptools
+  - INTERNET permission is declared
+  - tester6 saves images to app-private storage (profile_images/), so no external storage permission is required
+- If you encounter SSL or dependency issues on certain Android versions/CPUs, try:
+  - Clearing buildozer .buildozer cache and rebuilding
+  - Updating android.api to match your SDK
+  - Removing arm64 or armv7 temporarily to isolate arch-specific issues
 
 GitHub Actions (optional)
 You can enable CI builds with the provided workflow:

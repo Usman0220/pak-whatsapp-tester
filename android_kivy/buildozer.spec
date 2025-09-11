@@ -9,8 +9,9 @@ version = 0.1.0
 orientation = portrait
 fullscreen = 0
 
-# Keep requirements minimal to ensure builds succeed. Network libs from tester6 are not required for the demo.
-requirements = python3,kivy
+# Full network workflow requirements
+# aiohttp and its deps + SSL and certs
+requirements = python3,kivy,aiohttp,openssl,certifi,yarl,multidict,async-timeout,aiosignal,frozenlist,attrs,setuptools
 
 # This will create an APK
 android.archs = arm64-v8a, armeabi-v7a
@@ -20,8 +21,8 @@ android.sdk = 0
 android.ndk = 25b
 android.numeric_version = 1
 
-# Permissions (none needed for this demo)
-android.permissions =
+# Permissions required for network access
+android.permissions = INTERNET
 
 # Icons (optional)
 icon.filename =
